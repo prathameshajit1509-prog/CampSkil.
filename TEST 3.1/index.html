@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Campskil.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://accounts.google.com/gsi/client" async></script>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  
+<button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">🌙</button>
+
+<main class="glass-card" id="authCard">
+  <div class="segmented" id="roleSwitch">
+    <button class="seg-btn active" data-role="student">Student</button>
+    <button class="seg-btn" data-role="admin">TPO / Admin</button>
+  </div>
+
+  <!-- STUDENT SECTION -->
+  <div class="role-section active" id="studentSection">
+
+    <form class="auth-form active" id="studentLoginForm" novalidate>
+      <h2 class="form-title">Welcome back</h2>
+      <p class="form-sub">Log in with your email address.</p>
+      <div class="error-box" id="studentLoginError"></div>
+      
+      <div class="field">
+        <label>Email</label>
+        <input type="email" id="slEmail" required>
+      </div>
+      <div class="field">
+        <label>Password</label>
+        <input type="password" id="slPassword" required>
+      </div>
+      <button type="submit" class="btn-primary">Log in</button>
+
+      <div class="switch-line" style="margin: 15px 0;">Or continue with</div>
+      <div id="g_id_onload"
+           data-client_id="YOUR_CLIENT_ID_HERE.apps.googleusercontent.com"
+           data-context="signin"
+           data-ux_mode="popup"
+           data-callback="handleGoogleLogin"
+           data-auto_prompt="false">
+      </div>
+      <div class="g_id_signin"
+           data-type="standard"
+           data-shape="rectangular"
+           data-theme="outline"
+           data-text="signin_with"
+           data-size="large"
+           data-logo_alignment="center">
+      </div>
+
+      <p class="switch-line">New student? <a id="toStudentRegister">Create an account</a></p>
+    </form>
+
+    <form class="auth-form" id="studentRegisterForm" novalidate>
+      <h2 class="form-title">Create your account</h2>
+      <p class="form-sub">Takes under a minute.</p>
+      <div class="error-box" id="studentRegError"></div>
+      <div class="success-box" id="studentRegSuccess"></div>
+      <div class="field"><label>Full name</label><input type="text" id="srName" required></div>
+      <div class="field"><label>Enrollment number</label><input type="text" id="srEnrollment" maxlength="16" required>
+        <div class="hint">Exactly 16 characters</div></div>
+      <div class="field"><label>Email</label><input type="email" id="srEmail" required></div>
+      <div class="field"><label>Phone number</label><input type="text" id="srPhone" maxlength="10" required>
+        <div class="hint">10 digits</div></div>
+      <div class="row2">
+        <div class="field"><label>Branch</label>
+          <select id="srBranch">
+            <option value="cse-aiml">CSE (AI &amp; ML)</option>
+            <option value="cse">CSE</option>
+            <option value="EE">EE</option>
+            <option value="it">IT</option>
+          </select>
+        </div>
+        <div class="field"><label>Year</label>
+          <select id="srYear">
+            <option value="First Year">First Year</option>
+            <option value="Second Year">Second Year</option>
+            <option value="Third Year">Third Year</option>
+            <option value="Final Year">Final Year</option>
+          </select>
+        </div>
+      </div>
+      <div class="field"><label>CGPA</label><input type="number" step="0.01" min="0" max="10" id="srCgpa" required></div>
+      <div class="row2">
+        <div class="field"><label>Password</label><input type="password" id="srPassword" required></div>
+        <div class="field"><label>Confirm password</label><input type="password" id="srConfirm" required></div>
+      </div>
+      <button type="submit" class="btn-primary">Create account</button>
+      <p class="switch-line">Already registered? <a id="toStudentLogin">Log in</a></p>
+    </form>
+
+  </div>
+
+  <!-- ADMIN / TPO SECTION -->
+  <div class="role-section" id="adminSection">
+
+    <form class="auth-form active" id="adminLoginForm" novalidate>
+      <h2 class="form-title">TPO Login</h2>
+      <p class="form-sub">Log in with your authorized email.</p>
+      <div class="error-box" id="adminLoginError"></div>
+      <div class="field">
+        <label>Email</label>
+        <input type="email" id="alEmail" required>
+      </div>
+      <div class="field">
+        <label>Password</label>
+        <input type="password" id="alPassword" required>
+      </div>
+      <button type="submit" class="btn-primary">Log in</button>
+      <p class="switch-line">First time or forgot? <a id="toAdminReset">Set your password</a></p>
+    </form>
+
+    <form class="auth-form" id="adminResetForm" novalidate>
+      <h2 class="form-title">Set TPO Password</h2>
+      <p class="form-sub">Restricted to authorized placement officers.</p>
+      <div class="error-box" id="adminResetError"></div>
+      <div class="success-box" id="adminResetSuccess"></div>
+      <div class="field"><label>Authorized Email</label><input type="email" id="arEmail" required></div>
+      <div class="row2">
+        <div class="field"><label>New Password</label><input type="password" id="arPassword" required></div>
+        <div class="field"><label>Confirm</label><input type="password" id="arConfirm" required></div>
+      </div>
+      <button type="submit" class="btn-primary">Save Password</button>
+      <p class="switch-line">Back to <a id="toAdminLogin">Log in</a></p>
+    </form>
+
+  </div>
+
+  <!-- DASHBOARD -->
+  <div class="dashboard" id="dashboard">
+    <h2 class="form-title" id="dashTitle">Welcome</h2>
+    <p class="form-sub" id="dashSub"></p>
+    <div id="dashBody"></div>
+    <button class="btn-ghost" id="logoutBtn">Log out</button>
+  </div>
+
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>
