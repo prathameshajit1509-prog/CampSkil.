@@ -1,150 +1,55 @@
-/* Base Reset */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
+// DOM Elements
+const loginForm = document.getElementById('login-form');
+const registerForm = document.getElementById('register-form');
+const showRegisterBtn = document.getElementById('show-register');
+const showLoginBtn = document.getElementById('show-login');
+const registerSubmitBtn = document.getElementById('register-btn');
 
-/* Solid Background & Centering layout */
-body {
-    background-color: #0a2532; /* Deep dark blue */
-    color: #ffffff;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    padding: 20px;
-}
+// Error Elements
+const emailError = document.getElementById('email-error');
+const phoneError = document.getElementById('phone-error');
 
-/* Adaptive Form Card */
-.form-container {
-    width: 100%;
-    max-width: 420px;
-    background-color: #123446; /* Slightly lighter elevated card */
-    padding: 40px 30px;
-    border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-    margin-bottom: 20px;
-}
+// Toggle to Registration Form
+showRegisterBtn.addEventListener('click', () => {
+    loginForm.classList.add('hidden');
+    registerForm.classList.remove('hidden');
+});
 
-/* Header & Typography */
-.brand-header {
-    text-align: center;
-    margin-bottom: 30px;
-}
+// Toggle to Login Form
+showLoginBtn.addEventListener('click', () => {
+    registerForm.classList.add('hidden');
+    loginForm.classList.remove('hidden');
+});
 
-.wordmark {
-    font-size: 2.2rem;
-    font-weight: 700;
-    color: #4ade80; /* Vibrant green accent */
-    letter-spacing: 1px;
-}
+// Registration Validation Logic
+registerSubmitBtn.addEventListener('click', (e) => {
+    e.preventDefault(); // Prevent page reload
 
-.brand-header p {
-    color: #94a3b8;
-    font-size: 0.9rem;
-    margin-top: 5px;
-}
+    // Grab input values
+    const email = document.getElementById('reg-email').value;
+    const phone = document.getElementById('reg-phone').value;
+    
+    let isValid = true;
 
-form h2 {
-    margin-bottom: 20px;
-    font-size: 1.5rem;
-    text-align: center;
-}
+    // Reset error messages
+    emailError.style.display = 'none';
+    phoneError.style.display = 'none';
 
-/* Input Fields */
-.input-group {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 18px;
-}
+    // Validate Email
+    if (!email.endsWith('@gmail.com') && !email.endsWith('@outlook.com')) {
+        emailError.style.display = 'block';
+        isValid = false;
+    }
 
-.input-group label {
-    font-size: 0.85rem;
-    margin-bottom: 6px;
-    color: #cbd5e1;
-}
+    // Validate Phone (Exactly 10 digits)
+    if (phone.length !== 10) {
+        phoneError.style.display = 'block';
+        isValid = false;
+    }
 
-.input-group input, 
-.input-group select {
-    padding: 12px;
-    border-radius: 6px;
-    border: 1px solid #23526b;
-    background-color: #0a2532;
-    color: #ffffff;
-    font-size: 1rem;
-    outline: none;
-    transition: border-color 0.3s;
-}
-
-.input-group input:focus, 
-.input-group select:focus {
-    border-color: #4ade80;
-}
-
-/* Fix Dropdown Menu Colors */
-select option {
-    background-color: #0a2532;
-    color: #ffffff;
-}
-
-/* Buttons */
-.primary-btn {
-    width: 100%;
-    padding: 14px;
-    background-color: #4ade80;
-    color: #041219;
-    font-size: 1rem;
-    font-weight: bold;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.1s;
-    margin-top: 10px;
-}
-
-.primary-btn:hover {
-    background-color: #22c55e;
-}
-
-.primary-btn:active {
-    transform: scale(0.98);
-}
-
-/* Toggles & Links */
-.toggle-text {
-    text-align: center;
-    margin-top: 20px;
-    font-size: 0.9rem;
-    color: #94a3b8;
-}
-
-.text-link {
-    color: #4ade80;
-    cursor: pointer;
-    font-weight: 600;
-}
-
-.text-link:hover {
-    text-decoration: underline;
-}
-
-/* Footer */
-.hero-footer {
-    color: #64748b;
-    font-size: 0.8rem;
-}
-
-/* Utilities (Validation & Switching) */
-.hidden {
-    display: none !important;
-}
-
-.error-text {
-    color: #ff6b6b;
-    font-size: 0.8rem;
-    margin-top: 5px;
-    display: none; /* Hidden by default */
-}
+    // If validations pass
+    if (isValid) {
+        alert("Validation Passed! Ready to send to Spring Boot Backend.");
+        // Normally, you would trigger your API fetch request here.
+    }
+});
