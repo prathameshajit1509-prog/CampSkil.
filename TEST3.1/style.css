@@ -1,216 +1,55 @@
-:root {
-  
-  --bg: rgba(255, 255, 255, 0.2); 
-  --surface: rgba(255, 255, 255, 0.85); 
-  --text: #ffffff; 
-  --muted: #e2e8f0;
-  --border: rgba(255, 255, 255, 0.4); 
-  --accent: #5FBF9E; 
-  --accent-ink: #0A2C21;
-  --good: #5FBF9E; 
-  --bad: #E06C5A; 
-}
-html[data-theme="dark"]{
-  --bg: rgba(0, 0, 0, 0.15); 
-  --surface: rgba(20, 26, 40, 0.85); 
-  --text: #EAEDF6; 
-  --muted: #98A1BC;
-  --border: rgba(234, 237, 246, 0.2); 
-  --accent: #5FBF9E; 
-  --accent-ink: #0A2C21;
-  --good: #5FBF9E; 
-  --bad: #E06C5A; 
-}
-*{box-sizing:border-box;}
+// DOM Elements
+const loginForm = document.getElementById('login-form');
+const registerForm = document.getElementById('register-form');
+const showRegisterBtn = document.getElementById('show-register');
+const showLoginBtn = document.getElementById('show-login');
+const registerSubmitBtn = document.getElementById('register-btn');
 
-body {
-  margin: 0;
-  min-height: 100vh;
-  font-family: 'Inter', sans-serif;
-  color: var(--text);
-  background-image: url('IMG.png');
-  background-size: cover;
-  background-attachment:fixed ;
-  background-position: right center;
-  background-repeat: no-repeat;
-  position: relative;
-  transition: color .3s;
-  display: flex ;
-  justify-content: center;
-  align-items: center;
-}
+// Error Elements
+const emailError = document.getElementById('email-error');
+const phoneError = document.getElementById('phone-error');
 
-.theme-toggle {
-  position: absolute;
-  top: 28px;
-  right: 28px;
-  background: rgba(255, 255, 255, 0.15);
-  border: 1px solid var(--border);
-  color: #EDEFF7;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  cursor: pointer;
-  font-size: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 10;
-}
+// Toggle to Registration Form
+showRegisterBtn.addEventListener('click', () => {
+    loginForm.classList.add('hidden');
+    registerForm.classList.remove('hidden');
+});
 
-/* Glassmorphism Card */
-.glass-card {
-  position: absolute;
-  top: 10%;
-  right: 8%;
-  width: 100%;
-  max-width: 420px;
-  max-height: 80vh;
-  overflow-y: auto;
-  background: var(--bg);
-  backdrop-filter: blur(2px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
-  padding: 34px 32px;
-}
+// Toggle to Login Form
+showLoginBtn.addEventListener('click', () => {
+    registerForm.classList.add('hidden');
+    loginForm.classList.remove('hidden');
+});
 
-/* Hide scrollbar for the glass card */
-.glass-card::-webkit-scrollbar { display: none; }
-.glass-card { -ms-overflow-style: none; scrollbar-width: none; }
+// Registration Validation Logic
+registerSubmitBtn.addEventListener('click', (e) => {
+    e.preventDefault(); // Prevent page reload
 
-.segmented {
-  display: flex;
-  background: rgba(0, 0, 0, 0.2);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 4px;
-  margin-bottom: 26px;
-}
-.seg-btn {
-  flex: 1; border: none; background: transparent; padding: 9px 0; border-radius: 7px;
-  font-family: 'Inter', sans-serif; font-weight: 600; font-size: 13.5px;
-  color: var(--muted); cursor: pointer; transition: .2s;
-}
-.seg-btn.active {
-  background: var(--surface); color: var(--accent-ink); box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-}
-html[data-theme="dark"] .seg-btn.active { color: var(--text); }
-
-.role-section { display: none; }
-.role-section.active { display: block; }
-.auth-form { display: none; }
-.auth-form.active { display: block; }
-
-h2.form-title { font-family: 'Fraunces', serif; font-weight: 600; font-size: 23px; margin: 0 0 6px; }
-.form-sub { color: #000000 ; font-size: 13.5px; margin: 0 0 22px; font-weight: 500; text-shadow: 0 1px 4px rgba(255, 255, 255, 0.5); }
-
-.field { margin-bottom: 15px; }
-.field label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; color: var(--text); text-shadow: 0 1px 3px rgba(0,0,0,0.5); }
-.field input, .field select {
-  width: 100%; padding: 10px 12px; border-radius: 8px;
-  border: 1px solid var(--border); background: var(--surface);
-  color: #121A2E; font-family: 'Inter', sans-serif; font-size: 14px;
-}
-html[data-theme="dark"] .field input, html[data-theme="dark"] .field select { color: var(--text); }
-.field input:focus, .field select:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
-.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-.hint { font-size: 11.5px; color: #000000; margin-top: 4px; font-weight: 500 ; text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5); }
-
-.btn-primary {
-  width: 100%; padding: 11px 0; border-radius: 8px; border: none;
-  background: var(--accent); color: var(--accent-ink);
-  font-weight: 700; font-size: 14.5px; cursor: pointer; margin-top: 6px;
-}
-.btn-primary:hover { filter: brightness(1.05); }
-.btn-ghost {
-  width: 100%; padding: 11px 0; border-radius: 8px;
-  border: 1px solid var(--border); background: rgba(255,255,255,0.1);
-  color: var(--text); font-weight: 600; font-size: 14px; cursor: pointer; margin-top: 12px;
-}
-
-.switch-line { 
-  text-align: center; 
-  font-size: 13px; 
-  color: #000000; 
-  margin-top: 18px; 
-  font-weight: 500;
-  text-shadow: 0 1px 4px rgba(255, 255, 255, 0.5);
-}
-
-/* Keeps the clickable link styled with your green accent color but makes it bolder */
-.switch-line a { 
-  color: var(--accent); 
-  text-decoration: underline; 
-  font-weight: 800; 
-  cursor: pointer; 
-  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8); /* Dark shadow to make the green pop */
-}
-
-.error-box { background: rgba(184,66,52,0.8); border: 1px solid rgba(184,66,52,1); color: #fff; padding: 10px 12px; border-radius: 8px; font-size: 12.5px; margin-bottom: 16px; display: none; line-height: 1.5; }
-.success-box { background: rgba(46,125,91,0.8); border: 1px solid rgba(46,125,91,1); color: #fff; padding: 10px 12px; border-radius: 8px; font-size: 12.5px; margin-bottom: 16px; display: none; }
-
-.dashboard { display: none; }
-.dashboard.show { display: block; }
-.dash-badge { display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 700; margin-top: 6px; }
-.badge-good { background: rgba(46,125,91,0.3); color: #8BE4B6; }
-.badge-bad { background: rgba(184,66,52,0.3); color: #FFA196; }
-.dash-row { border-top: 1px solid var(--border); padding: 12px 0; font-size: 13.5px; display: flex; justify-content: space-between; color: var(--muted); text-shadow: 0 1px 2px rgba(0,0,0,0.5); }
-.dash-row span:last-child { color: var(--text); font-weight: 600; }
-
-/* --- TABLET & MOBILE RESPONSIVENESS --- */
-@media (max-width: 900px) {
-  /* 1. Stack the panes vertically instead of side-by-side */
-  .split-layout {
-    flex-direction: column;
-  }
-  
-  /* 2. Give the background image a fixed height at the top so the logo remains visible */
-  .image-pane {
-    flex: none;
-    height: 35vh; 
-    background-position: center top; 
-  }
-  
-  /* 3. Allow the form to take up the rest of the screen below the image */
-  .form-pane {
-    flex: none;
-    min-height: 65vh;
-    padding: 20px;
-  }
-}
-/*added to make the ui adaptive*/
-/* --- MOBILE & TABLET OPTIMIZATION --- */
-@media (max-width: 900px) {
-  body {
-    /* 1. Frames the best part of the image for portrait screens */
-    background-position: center bottom; 
+    // Grab input values
+    const email = document.getElementById('reg-email').value;
+    const phone = document.getElementById('reg-phone').value;
     
-    /* 2. Centers the login box instead of pushing it to the right side */
-    justify-content: center; 
-    align-items: center;
-    
-    /* 3. Adds global padding so the box doesn't touch the phone's physical edges */
-    padding: 15px; 
-  }
+    let isValid = true;
 
-  .glass-card {
-    /* 4. Fixes the bleeding edge shown in the screenshot */
-    width: 100%;
-    max-width: 400px; /* Keeps it proportional */
-    margin: 0; /* Overrides any desktop positioning */
-    box-sizing: border-box; /* Forces padding to stay inside the width */
-    padding: 30px 20px !important; /* Tighter padding for small screens */
-  }
+    // Reset error messages
+    emailError.style.display = 'none';
+    phoneError.style.display = 'none';
 
-  /* 5. Scales down the typography so words don't get cut off */
-  .glass-card h2, 
-  .glass-card h3 {
-    font-size: 24px !important;
-  }
-  
-  .glass-card p {
-    font-size: 14px;
-  }
-}
+    // Validate Email
+    if (!email.endsWith('@gmail.com') && !email.endsWith('@outlook.com')) {
+        emailError.style.display = 'block';
+        isValid = false;
+    }
+
+    // Validate Phone (Exactly 10 digits)
+    if (phone.length !== 10) {
+        phoneError.style.display = 'block';
+        isValid = false;
+    }
+
+    // If validations pass
+    if (isValid) {
+        alert("Validation Passed! Ready to send to Spring Boot Backend.");
+        // Normally, you would trigger your API fetch request here.
+    }
+});
